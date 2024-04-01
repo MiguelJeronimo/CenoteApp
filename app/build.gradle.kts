@@ -39,7 +39,22 @@ android {
 }
 
 dependencies {
-
+    implementation("org.osmdroid:osmdroid-android:6.1.18")
+    implementation("org.osmdroid:osmdroid-mapsforge:6.1.10")
+    implementation("org.osmdroid:osmdroid-geopackage:6.1.10")
+    implementation("org.osmdroid:osmdroid-wms:6.1.10")
+    implementation("com.github.bumptech.glide:glide:4.15.1")
+    implementation("com.google.android.gms:play-services-location:21.2.0")
+//    implementation("org.osmdroid:osmdroid-third-party:6.0.1")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    //MVVM
+    // ViewModel
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    // LiveData
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
