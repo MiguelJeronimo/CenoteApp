@@ -27,11 +27,22 @@ class RepositoryRouterMap {
             longitudeDestination.toString()
         )
         call.enqueue(object: Callback<Route>{
-            val routeModel = RouteModel(null, null, null)
+            val routeModel = RouteModel(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null)
             val routesArray = ArrayList<GeoPoint>()
             override fun onResponse(call: Call<Route>, response: Response<Route>) {
                 if (response.isSuccessful){
                     val routes = response.body()?.routes?.get(0)?.legs!![0]
+                    routeModel.summary = routes.summary
+                    routeModel.weight = routes.weight
+                    routeModel.duration = routes.duration
+                    routeModel.distances = routes.distance
                     routes.steps.forEach {
                         it.intersections.forEach {
                             routesArray.add(GeoPoint(

@@ -8,9 +8,7 @@ import android.location.Location
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.ui.AppBarConfiguration
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
@@ -22,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.miguel.cenoteapp.databinding.ActivityMainBinding
+import com.miguel.cenoteapp.utils.Fomulas
 import com.miguel.mapsboxexmaple.ViewModels.ViewModelMap
 import com.miguel.mapsboxexmaple.Views.ModalBottomSheets
 import com.miguel.mapsboxexmaple.utils.LocalizationUser
@@ -38,7 +37,7 @@ import org.osmdroid.views.overlay.Polyline
 
 class MainActivity : AppCompatActivity(), MapListener {
 
-    private lateinit var appBarConfiguration: AppBarConfiguration
+//    private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
     lateinit var markets: Marker
@@ -92,13 +91,10 @@ class MainActivity : AppCompatActivity(), MapListener {
         ) {
             requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
             requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
-            println("pidiendo permisos nuevamente")
         }
         viewModelMap.positionUser.observe(this, Observer {
             if (it != null){
-                println("viuewmodel activop")
-                println("Data: ${it.latitude},${ it.longitude}")
-                mapView.controller.setCenter(GeoPoint(it.latitude,it.longitude)) // Coordenadas de París
+                mapView.controller.setCenter(GeoPoint(it.latitude,it.longitude))
                 showMarker(
                     location = it,
                     it.latitude,
@@ -144,7 +140,6 @@ class MainActivity : AppCompatActivity(), MapListener {
                         viewModelMap)
                 }
             }
-
         })
 
         mapView.setOnTouchListener { v, event ->
@@ -203,7 +198,7 @@ class MainActivity : AppCompatActivity(), MapListener {
                 val latitude = marker.position.latitude
                 val longitude = marker.position.longitude
                 val locationUser = viewModelMap.positionUser.value
-                modalBottomSheet = ModalBottomSheets(name, cenoteLocations)
+                modalBottomSheet = ModalBottomSheets(name, cenoteLocations, locationUser, latitude, longitude)
                 modalBottomSheet.show(supportFragmentManager, ModalBottomSheets.TAG)
                 if (locationUser != null) {
                     viewModelMap.route(

@@ -43,6 +43,34 @@
                         android:orientation="horizontal"
                         app:layoutManager="com.google.android.material.carousel.CarouselLayoutManager"
                         tools:listitem="@layout/items_image_cenotes" />
+                    <TextView
+                        android:id="@+id/distances"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        tools:text="Distancia estimada: 55.50 Km."
+                        android:textAlignment="center"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        tools:text="Tiempo estimado: 1.03 Hr."
+                        android:textAlignment="center"
+                        android:textSize="20sp"
+                        android:textStyle="italic" />
+                    <TextView
+                        android:id="@+id/summary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        tools:text="Carretera Mérida-Hunucmá-Celestún, Carretera Hunucmá - Sisal"
+                        android:textAlignment="center"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
