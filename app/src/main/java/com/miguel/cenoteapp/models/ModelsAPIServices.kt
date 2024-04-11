@@ -31,6 +31,7 @@ data class Steps(
     @SerializedName("driving_side")
     val drivingSide: String,
     val name: String,
+    val ref: String?,
     val intersections: ArrayList<Intersections>,
     val weight: Float,
     val duration: Float,

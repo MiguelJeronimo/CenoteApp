@@ -26,16 +26,9 @@ class AdapterRecyclerViewCenotes(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val url = items_cenotes[position].img
-        println(url)
         Glide.with(holder.imageCenotes.context)
             .load(url)
             .into(holder.imageCenotes)
-//        (holder.itemView as MaskableFrameLayout).setOnMaskChangedListener {
-//                maskRect ->
-//            // Any custom motion to run when mask size changes
-//            holder.imageCenotes.setTranslationX(maskRect.left)
-//            holder.imageCenotes.setAlpha(lerp(1F, 0F, 0F, 80F, maskRect.left))
-//        }
     }
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {

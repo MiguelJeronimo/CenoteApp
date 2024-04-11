@@ -1,48 +1,99 @@
 package com.miguel.mapsboxexmaple.Views
 
 import android.app.Dialog
+import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.carousel.CarouselLayoutManager
 import com.google.android.material.carousel.CarouselSnapHelper
 import com.miguel.cenoteapp.databinding.ButtonSheetsBinding
+import com.miguel.cenoteapp.recyclerview.AdapterRecyclerViewNavigation
+import com.miguel.cenoteapp.utils.Fomulas
+import com.miguel.mapsboxexmaple.ViewModels.ViewModelMap
 import com.miguel.mapsboxexmaple.recyclerview.AdapterRecyclerViewCenotes
+import com.miguel.mapsboxexmaple.recyclerview.ItemsNavigation
 import com.miguel.mapsboxexmaple.recyclerview.ItemsRecyclerView
-
 
 class ModalBottomSheets(
     private val nameCenote: String,
     private val cenoteLocations: ArrayList<String>?,
+    private val locationUser: Location?,
+    private val latitude: Double,
+    private val longitude: Double,
 ) : BottomSheetDialogFragment() {
-    var bottomSheetBehavior: BottomSheetBehavior<*>? = null
     private lateinit var binding: ButtonSheetsBinding
     //recyclerview
     private lateinit var adapterRecyclerViewCenotes: AdapterRecyclerViewCenotes
     private var listCenotes = ArrayList<ItemsRecyclerView>()
+    var formulas = Fomulas()
+    //recyclerview Naigation
+    private lateinit var adapterRecyclerViewNavigation: AdapterRecyclerViewNavigation
+    private var listNavigation = ArrayList<ItemsNavigation>()
     private lateinit var linearLayoutManager: LinearLayoutManager
     //private lateinit var binding: FragmentYourBottomSheetBinding
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = BottomSheetDialog(requireContext(), theme)
         dialog.setOnShowListener { dialogInterface ->
+            val viewModel = ViewModelProvider(this)[ViewModelMap::class.java]
+
+            val recyclerViewNavigation = binding.recyclerViewNavigation
+            linearLayoutManager = LinearLayoutManager(context)
+            linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
+            adapterRecyclerViewNavigation = AdapterRecyclerViewNavigation(itemsNavigation = listNavigation)
+            recyclerViewNavigation.layoutManager = linearLayoutManager
+            recyclerViewNavigation.setHasFixedSize(true)
+            recyclerViewNavigation.adapter = adapterRecyclerViewNavigation
+
             val recyclerview = binding.recyclerViewCenotes
             CarouselSnapHelper().attachToRecyclerView(recyclerview)
             adapterRecyclerViewCenotes = AdapterRecyclerViewCenotes(items_cenotes = listCenotes)
             recyclerview.adapter = adapterRecyclerViewCenotes
             binding.cenoteName.text = nameCenote
 
+            if (locationUser != null){
+                viewModel.route(
+                    locationUser.latitude,
+                    locationUser.longitude,
+                    latitude,
+                    longitude
+                )
+            }
+
+            viewModel.route.observe(this, Observer {
+                if (it != null){
+                    binding.summary.text = it.summary
+                    binding.distances.text = "Distancia aproximada: ${formulas.meterToKiloMeters(it.distances!!)} Km."
+                    binding.time.text = "Tiempo aprox: ${formulas.secondsToHours(it.duration!!)}"
+                    it.navigation?.forEach {
+                        listNavigation.add(
+                            ItemsNavigation(
+                                it.description.toString(),
+                                it.icon,
+                                it.distances
+                            )
+                        )
+                    }
+                    println("DATA: ${listNavigation}")
+                    recyclerViewNavigation.post {
+                        adapterRecyclerViewNavigation.notifyDataSetChanged()
+                    }
+                }
+            })
+
             cenoteLocations?.forEach {
-                println(it)
                 listCenotes.add(ItemsRecyclerView(
                     it
                 ))
             }
+
             recyclerview.post {
                 adapterRecyclerViewCenotes.notifyDataSetChanged()
             }

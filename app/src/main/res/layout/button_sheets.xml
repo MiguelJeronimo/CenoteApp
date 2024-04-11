@@ -7,33 +7,44 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-        <com.google.android.material.bottomsheet.BottomSheetDragHandleView
-            android:id="@+id/drag_handle"
+    <com.google.android.material.bottomsheet.BottomSheetDragHandleView
+        android:id="@+id/drag_handle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <!-- Drag handle for accessibility -->
                 <LinearLayout
+                    android:id="@+id/linearLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:textAlignment="center"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
+
                     <TextView
                         android:id="@+id/cenoteName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="30dp"
-                        tools:text="Cenote El Pocito"
                         android:textAlignment="center"
                         android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:text="Cenote El Pocito" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerViewCenotes"
@@ -43,6 +54,47 @@
                         android:orientation="horizontal"
                         app:layoutManager="com.google.android.material.carousel.CarouselLayoutManager"
                         tools:listitem="@layout/items_image_cenotes" />
+
+                    <TextView
+                        android:id="@+id/distances"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:textAlignment="center"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        tools:text="Distancia estimada: 55.50 Km." />
+
+                    <TextView
+                        android:id="@+id/time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:textAlignment="center"
+                        android:textSize="20sp"
+                        android:textStyle="italic"
+                        tools:text="Tiempo estimado: 1.03 Hr." />
+
+                    <TextView
+                        android:id="@+id/summary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:textAlignment="center"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        tools:text="Carretera Mérida-Hunucmá-Celestún, Carretera Hunucmá - Sisal" />
                 </LinearLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewNavigation"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+                    tools:listitem="@layout/items_routes_indicate" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
