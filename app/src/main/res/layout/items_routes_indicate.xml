@@ -16,13 +16,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.85" />
+        app:layout_constraintGuide_percent="0.8" />
 
     <ImageView
         android:id="@+id/imageViewIcon"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_marginTop="15dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewDescription"
         app:layout_constraintEnd_toStartOf="@+id/guildlinecentral"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -33,10 +33,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         android:text="Make a U-turn and continue on Avenida Pérez Ponce (MEX 178)"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guildlineFinal"
         app:layout_constraintStart_toStartOf="@+id/guildlinecentral"
         app:layout_constraintTop_toTopOf="parent" />
@@ -45,10 +43,23 @@
         android:id="@+id/textViewDistances"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:text="150 m"
         android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewDescription"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guildlineFinal"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/materialDivider"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDescription" />
 </androidx.constraintlayout.widget.ConstraintLayout>

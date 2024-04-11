@@ -5,7 +5,7 @@ class Fomulas {
     fun meterToKiloMeters(meters: Float?): String {
         val kilometers = meters!! /1000
         if (kilometers >= 1){
-            return "${kilometers} Km."
+            return "${String.format("%.2f", kilometers)} Km."
         } else {
             return "${kilometers*1000} m."
         }

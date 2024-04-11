@@ -14,7 +14,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.carousel.CarouselSnapHelper
-import com.miguel.cenoteapp.Views.components.LinearLayoutCustom
 import com.miguel.cenoteapp.databinding.ButtonSheetsBinding
 import com.miguel.cenoteapp.recyclerview.AdapterRecyclerViewNavigation
 import com.miguel.cenoteapp.utils.Fomulas
@@ -30,13 +29,11 @@ class ModalBottomSheets(
     private val latitude: Double,
     private val longitude: Double,
 ) : BottomSheetDialogFragment() {
-    var bottomSheetBehavior: BottomSheetBehavior<*>? = null
     private lateinit var binding: ButtonSheetsBinding
     //recyclerview
     private lateinit var adapterRecyclerViewCenotes: AdapterRecyclerViewCenotes
     private var listCenotes = ArrayList<ItemsRecyclerView>()
     var formulas = Fomulas()
-    private lateinit var linearLayoutCustom: LinearLayoutCustom
     //recyclerview Naigation
     private lateinit var adapterRecyclerViewNavigation: AdapterRecyclerViewNavigation
     private var listNavigation = ArrayList<ItemsNavigation>()
@@ -45,7 +42,6 @@ class ModalBottomSheets(
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = BottomSheetDialog(requireContext(), theme)
         dialog.setOnShowListener { dialogInterface ->
-            linearLayoutCustom = LinearLayoutCustom(context, binding)
             val viewModel = ViewModelProvider(this)[ViewModelMap::class.java]
 
             val recyclerViewNavigation = binding.recyclerViewNavigation
@@ -70,6 +66,7 @@ class ModalBottomSheets(
                     longitude
                 )
             }
+
             viewModel.route.observe(this, Observer {
                 if (it != null){
                     binding.summary.text = it.summary
@@ -90,11 +87,13 @@ class ModalBottomSheets(
                     }
                 }
             })
+
             cenoteLocations?.forEach {
                 listCenotes.add(ItemsRecyclerView(
                     it
                 ))
             }
+
             recyclerview.post {
                 adapterRecyclerViewCenotes.notifyDataSetChanged()
             }
