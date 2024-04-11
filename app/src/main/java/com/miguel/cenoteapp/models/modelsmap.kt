@@ -9,5 +9,12 @@ data class RouteModel(
     var summary: String?,
     var weight: Float?,
     var distances: Float?,
-    var duration: Float?
+    var duration: Float?,
+    var navigation: ArrayList<NavigationModel>?
+)
+
+data class NavigationModel(
+    val description: String?,
+    val icon: Int?,
+    val distances: Float?
 )

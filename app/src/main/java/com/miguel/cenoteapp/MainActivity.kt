@@ -14,6 +14,7 @@ import android.view.MenuItem
 import android.view.MotionEvent
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -21,6 +22,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.miguel.cenoteapp.databinding.ActivityMainBinding
 import com.miguel.cenoteapp.utils.Fomulas
+import com.miguel.cenoteapp.utils.Utils
 import com.miguel.mapsboxexmaple.ViewModels.ViewModelMap
 import com.miguel.mapsboxexmaple.Views.ModalBottomSheets
 import com.miguel.mapsboxexmaple.utils.LocalizationUser
@@ -43,11 +45,13 @@ class MainActivity : AppCompatActivity(), MapListener {
     lateinit var markets: Marker
     lateinit var locationButton: FloatingActionButton
     lateinit var modalBottomSheet: ModalBottomSheets
+    var utils = Utils()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 //        val navController = findNavController(R.id.nav_host_fragment_content_main)
 //        appBarConfiguration = AppBarConfiguration(navController.graph)
 //        setupActionBarWithNavController(navController, appBarConfiguration)
@@ -62,8 +66,10 @@ class MainActivity : AppCompatActivity(), MapListener {
         val mapView = binding.root.findViewById<MapView>(R.id.mapa)
         mapView.addMapListener(this)
         mapView.setTileSource(TileSourceFactory.MAPNIK)
-        mapView.controller.setZoom(15.0)
-        mapView.controller.setCenter(GeoPoint(20.983617, -89.619942))
+        mapView.controller.setZoom(8.0)
+        //paseo60
+        //mapView.controller.setCenter(GeoPoint(20.983617, -89.619942))
+        mapView.controller.setCenter(GeoPoint(20.6858443,-88.2458626))
         mapView.invalidate()
         //verificar si el permiso esta activo
         val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
@@ -92,6 +98,8 @@ class MainActivity : AppCompatActivity(), MapListener {
             requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
             requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
         }
+
+
         viewModelMap.positionUser.observe(this, Observer {
             if (it != null){
                 mapView.controller.setCenter(GeoPoint(it.latitude,it.longitude))
@@ -189,6 +197,7 @@ class MainActivity : AppCompatActivity(), MapListener {
             val icon = resources.getDrawable(R.drawable.user_icon)
             market.icon = icon
             mapView.overlays.add(market)
+            mapView.controller.setZoom(15.0)
         } else {
             markets = Marker(mapView)
             markets.position = GeoPoint(latitude!!, longitud!!)

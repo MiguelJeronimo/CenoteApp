@@ -2,8 +2,13 @@ package com.miguel.cenoteapp.utils
 
 class Fomulas {
 
-    fun meterToKiloMeters(meters: Float): Float {
-        return meters/1000
+    fun meterToKiloMeters(meters: Float?): String {
+        val kilometers = meters!! /1000
+        if (kilometers >= 1){
+            return "${kilometers} Km."
+        } else {
+            return "${kilometers*1000} m."
+        }
     }
 
     fun secondsToHours(seconds: Float): String {
