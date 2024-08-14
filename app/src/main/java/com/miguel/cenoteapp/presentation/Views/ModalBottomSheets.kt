@@ -15,7 +15,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.carousel.CarouselSnapHelper
 import com.miguel.cenoteapp.databinding.ButtonSheetsBinding
-import com.miguel.cenoteapp.recyclerview.AdapterRecyclerViewNavigation
+import com.miguel.cenoteapp.presentation.recyclerview.AdapterRecyclerViewNavigation
 import com.miguel.cenoteapp.utils.Fomulas
 import com.miguel.mapsboxexmaple.ViewModels.ViewModelMap
 import com.miguel.mapsboxexmaple.recyclerview.AdapterRecyclerViewCenotes

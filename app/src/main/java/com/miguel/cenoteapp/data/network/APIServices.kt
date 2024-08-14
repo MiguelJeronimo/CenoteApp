@@ -1,4 +1,4 @@
-package com.miguel.mapsboxexmaple.domain
+package com.miguel.cenoteapp.data.network
 
 import com.miguel.mapsboxexmaple.models.Cenotes
 import com.miguel.mapsboxexmaple.models.Route
@@ -17,5 +17,5 @@ interface APIServices {
     ): Call<Route>
 
     @GET("rucoydata/cenotesData.json")
-    fun cenotes(): Call<Cenotes>
+    suspend fun cenotes(): Call<Cenotes>
 }

@@ -1,4 +1,4 @@
-package com.miguel.mapsboxexmaple.domain
+package com.miguel.cenoteapp.data.network
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -13,5 +13,12 @@ class RetrofitInstances {
             .baseUrl(url)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+    }
+
+    fun getRetrofit2(url: String): APIServices {
+        return Retrofit.Builder()
+            .baseUrl(url)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build().create(APIServices::class.java)
     }
 }

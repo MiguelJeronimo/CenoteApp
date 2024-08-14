@@ -1,9 +1,9 @@
-package com.miguel.mapsboxexmaple.repository
+package com.miguel.cenoteapp.data.repositories
 
 import androidx.lifecycle.MutableLiveData
 import com.miguel.cenoteapp.utils.Utils
-import com.miguel.mapsboxexmaple.domain.APIServices
-import com.miguel.mapsboxexmaple.domain.RetrofitInstances
+import com.miguel.cenoteapp.data.network.APIServices
+import com.miguel.cenoteapp.data.network.RetrofitInstances
 import com.miguel.mapsboxexmaple.models.NavigationModel
 import com.miguel.mapsboxexmaple.models.Route
 import com.miguel.mapsboxexmaple.models.RouteModel
@@ -21,7 +21,7 @@ class RepositoryRouterMap {
         longitudeDestination: Double,
         _routes: MutableLiveData<RouteModel>?
     ) {
-        val retrofit = RetrofitInstances().getRetrofit(urlBase).create(APIServices::class.java)
+        val retrofit = RetrofitInstances().getRetrofit2(urlBase)
         val call = retrofit.routes(
             latitudeUser.toString(),
             longitudeUser.toString(),

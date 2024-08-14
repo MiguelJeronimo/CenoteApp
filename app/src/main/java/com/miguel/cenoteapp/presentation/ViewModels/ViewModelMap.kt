@@ -3,14 +3,17 @@ package com.miguel.mapsboxexmaple.ViewModels
 import android.location.Location
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.miguel.cenoteapp.data.network.APIServices
+import com.miguel.cenoteapp.data.repositories.RepositoryCenotesImp
 import com.miguel.mapsboxexmaple.models.Cenotes
 import com.miguel.mapsboxexmaple.models.RouteModel
-import com.miguel.mapsboxexmaple.repository.RepositoryCenotes
-import com.miguel.mapsboxexmaple.repository.RepositoryRouterMap
+import com.miguel.cenoteapp.data.repositories.RepositoryRouterMap
+import com.miguel.cenoteapp.domain.UseCaseCenotes
+import kotlinx.coroutines.launch
 
-class ViewModelMap: ViewModel() {
+class ViewModelMap(userCaseCenotes: UseCaseCenotes): ViewModel() {
     private val routes = RepositoryRouterMap()
-    private val cenotesRepository = RepositoryCenotes()
     private val _route = MutableLiveData<RouteModel>()
     val route: MutableLiveData<RouteModel> get() = _route
     private val _positionUser = MutableLiveData<Location?>()
@@ -19,7 +22,10 @@ class ViewModelMap: ViewModel() {
     val cenotes: MutableLiveData<Cenotes> get() = _cenotes
 
     init {
-        cenotesRepository.cenotes(_cenotes)
+        viewModelScope.launch {
+            println("DATA: "+userCaseCenotes.invoke())
+            _cenotes.value = userCaseCenotes.invoke()
+        }
     }
 
     fun route(
@@ -41,6 +47,9 @@ class ViewModelMap: ViewModel() {
     }
 
     fun cenotes(){
-        cenotesRepository.cenotes(_cenotes)
+        viewModelScope.launch {
+           // println("DATA: "+userCaseCenotes.invoke())
+           // _cenotes.value = userCaseCenotes.invoke()
+        }
     }
 }

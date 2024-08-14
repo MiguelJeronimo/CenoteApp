@@ -1,4 +1,4 @@
-package com.miguel.cenoteapp.recyclerview
+package com.miguel.cenoteapp.presentation.recyclerview
 
 import android.view.LayoutInflater
 import android.view.View

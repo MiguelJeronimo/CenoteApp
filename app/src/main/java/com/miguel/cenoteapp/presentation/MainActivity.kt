@@ -1,4 +1,4 @@
-package com.miguel.cenoteapp
+package com.miguel.cenoteapp.presentation
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -20,13 +20,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.miguel.cenoteapp.R
 import com.miguel.cenoteapp.databinding.ActivityMainBinding
-import com.miguel.cenoteapp.utils.Fomulas
-import com.miguel.cenoteapp.utils.Utils
+import com.miguel.cenoteapp.presentation.ViewModels.Factorys.ViewModelMapFactory
 import com.miguel.mapsboxexmaple.ViewModels.ViewModelMap
 import com.miguel.mapsboxexmaple.Views.ModalBottomSheets
 import com.miguel.mapsboxexmaple.utils.LocalizationUser
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.osmdroid.config.Configuration
 import org.osmdroid.events.MapListener
 import org.osmdroid.events.ScrollEvent
@@ -45,7 +47,7 @@ class MainActivity : AppCompatActivity(), MapListener {
     lateinit var markets: Marker
     lateinit var locationButton: FloatingActionButton
     lateinit var modalBottomSheet: ModalBottomSheets
-    var utils = Utils()
+    lateinit var viewModelMap: ViewModelMap
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -61,8 +63,8 @@ class MainActivity : AppCompatActivity(), MapListener {
 //                .setAction("Action", null)
 //                .setAnchorView(R.id.fab).show()
 //        }
-
-        val viewModelMap = ViewModelProvider(this)[ViewModelMap::class.java]
+        val viewModelFactory: ViewModelMapFactory by inject()
+        viewModelMap = ViewModelProvider(this, factory = viewModelFactory)[ViewModelMap::class.java]
         val mapView = binding.root.findViewById<MapView>(R.id.mapa)
         mapView.addMapListener(this)
         mapView.setTileSource(TileSourceFactory.MAPNIK)
@@ -100,41 +102,42 @@ class MainActivity : AppCompatActivity(), MapListener {
         }
 
 
-        viewModelMap.positionUser.observe(this, Observer {
-            if (it != null){
-                mapView.controller.setCenter(GeoPoint(it.latitude,it.longitude))
-                showMarker(
-                    location = it,
-                    it.latitude,
-                    it.longitude,
-                    "Yo",
-                    null,
-                    "Mi ubicacion actual",
-                    mapView,
-                    viewModelMap
-                )
-            }
-        })
+//        viewModelMap.positionUser.observe(this, Observer {
+//            if (it != null){
+//                mapView.controller.setCenter(GeoPoint(it.latitude,it.longitude))
+//                showMarker(
+//                    location = it,
+//                    it.latitude,
+//                    it.longitude,
+//                    "Yo",
+//                    null,
+//                    "Mi ubicacion actual",
+//                    mapView,
+//                    viewModelMap
+//                )
+//            }
+//        })
 
-        val routeOverlay = Polyline(mapView)
-        viewModelMap.route.observe(this, Observer {
-            if (it != null){
-                val routePoints = ArrayList<GeoPoint>()
-                routePoints.clear()
-                it.points?.forEach { geoPoint->
-                    routePoints.add(geoPoint)
-                }
-                routeOverlay.setPoints(routePoints)
-                routeOverlay.color = Color.GREEN // Color de la línea de la ruta
-                routeOverlay.width = 5f // Ancho de la línea
-                mapView.overlays.add(routeOverlay)
-                mapView.invalidate()
-            } else{
-                Toast.makeText(this, "Verifica tu conexion a internet :)", Toast.LENGTH_SHORT).show()
-            }
-        })
+//        val routeOverlay = Polyline(mapView)
+//        viewModelMap.route.observe(this, Observer {
+//            if (it != null){
+//                val routePoints = ArrayList<GeoPoint>()
+//                routePoints.clear()
+//                it.points?.forEach { geoPoint->
+//                    routePoints.add(geoPoint)
+//                }
+//                routeOverlay.setPoints(routePoints)
+//                routeOverlay.color = Color.GREEN // Color de la línea de la ruta
+//                routeOverlay.width = 5f // Ancho de la línea
+//                mapView.overlays.add(routeOverlay)
+//                mapView.invalidate()
+//            } else{
+//                Toast.makeText(this, "Verifica tu conexion a internet :)", Toast.LENGTH_SHORT).show()
+//            }
+//        })
 
         viewModelMap.cenotes.observe(this, Observer {
+            println("CENOTES: $it")
             if (it != null){
                 it.data.forEach {
                     showMarker(
