@@ -102,39 +102,39 @@ class MainActivity : AppCompatActivity(), MapListener {
         }
 
 
-//        viewModelMap.positionUser.observe(this, Observer {
-//            if (it != null){
-//                mapView.controller.setCenter(GeoPoint(it.latitude,it.longitude))
-//                showMarker(
-//                    location = it,
-//                    it.latitude,
-//                    it.longitude,
-//                    "Yo",
-//                    null,
-//                    "Mi ubicacion actual",
-//                    mapView,
-//                    viewModelMap
-//                )
-//            }
-//        })
+        viewModelMap.positionUser.observe(this, Observer {
+            if (it != null){
+                mapView.controller.setCenter(GeoPoint(it.latitude,it.longitude))
+                showMarker(
+                    location = it,
+                    it.latitude,
+                    it.longitude,
+                    "Yo",
+                    null,
+                    "Mi ubicacion actual",
+                    mapView,
+                    viewModelMap
+                )
+            }
+        })
 
-//        val routeOverlay = Polyline(mapView)
-//        viewModelMap.route.observe(this, Observer {
-//            if (it != null){
-//                val routePoints = ArrayList<GeoPoint>()
-//                routePoints.clear()
-//                it.points?.forEach { geoPoint->
-//                    routePoints.add(geoPoint)
-//                }
-//                routeOverlay.setPoints(routePoints)
-//                routeOverlay.color = Color.GREEN // Color de la línea de la ruta
-//                routeOverlay.width = 5f // Ancho de la línea
-//                mapView.overlays.add(routeOverlay)
-//                mapView.invalidate()
-//            } else{
-//                Toast.makeText(this, "Verifica tu conexion a internet :)", Toast.LENGTH_SHORT).show()
-//            }
-//        })
+        val routeOverlay = Polyline(mapView)
+        viewModelMap.route.observe(this, Observer {
+            if (it != null){
+                val routePoints = ArrayList<GeoPoint>()
+                routePoints.clear()
+                it.points?.forEach { geoPoint->
+                    routePoints.add(geoPoint)
+                }
+                routeOverlay.setPoints(routePoints)
+                routeOverlay.color = Color.GREEN // Color de la línea de la ruta
+                routeOverlay.width = 5f // Ancho de la línea
+                mapView.overlays.add(routeOverlay)
+                mapView.invalidate()
+            } else{
+                Toast.makeText(this, "Verifica tu conexion a internet :)", Toast.LENGTH_SHORT).show()
+            }
+        })
 
         viewModelMap.cenotes.observe(this, Observer {
             println("CENOTES: $it")

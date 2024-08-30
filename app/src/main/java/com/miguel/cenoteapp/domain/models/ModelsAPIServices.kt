@@ -18,9 +18,9 @@ data class Routes(
 
 data class Legs(
     val steps: ArrayList<Steps>,
-    val summary: String,
-    val weight: Float,
-    val duration: Float,
+    var summary: String,
+    var weight: Float,
+    var duration: Float,
     val distance: Float
 )
 

@@ -2,7 +2,7 @@ package com.miguel.cenoteapp.presentation.ViewModels.Factorys
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.miguel.cenoteapp.domain.UseCaseCenotes
+import com.miguel.cenoteapp.domain.usecase.UseCaseCenotes
 import com.miguel.mapsboxexmaple.ViewModels.ViewModelMap
 
 class ViewModelMapFactory(private val userCaseCenotes: UseCaseCenotes) : ViewModelProvider.Factory {

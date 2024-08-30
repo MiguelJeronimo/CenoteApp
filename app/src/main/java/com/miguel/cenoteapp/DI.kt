@@ -1,11 +1,10 @@
 package com.miguel.cenoteapp
 
-import androidx.lifecycle.ViewModelProvider
 import com.miguel.cenoteapp.data.network.APIServices
 import com.miguel.cenoteapp.data.network.RetrofitInstances
 import com.miguel.cenoteapp.data.repositories.RepositoryCenote
 import com.miguel.cenoteapp.data.repositories.RepositoryCenotesImp
-import com.miguel.cenoteapp.domain.UseCaseCenotes
+import com.miguel.cenoteapp.domain.usecase.UseCaseCenotes
 import com.miguel.cenoteapp.presentation.ViewModels.Factorys.ViewModelMapFactory
 import com.miguel.mapsboxexmaple.ViewModels.ViewModelMap
 import org.koin.androidx.viewmodel.dsl.viewModel

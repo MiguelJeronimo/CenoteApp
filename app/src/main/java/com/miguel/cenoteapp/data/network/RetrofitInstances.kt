@@ -14,11 +14,4 @@ class RetrofitInstances {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
-
-    fun getRetrofit2(url: String): APIServices {
-        return Retrofit.Builder()
-            .baseUrl(url)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build().create(APIServices::class.java)
-    }
 }
